@@ -1,6 +1,28 @@
 const path = require('path')
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
+const bodyParser = require('body-parser')
+const lodashId = require('lodash-id')
+
+const getSchema = () => {
+  try {
+    const file = require.resolve(
+      path.resolve(__dirname, './mocks/db.schema.js')
+    )
+    delete require.cache[file]
+    const schema = require(file) || {}
+    return schema
+  } catch (err) {
+    return {}
+  }
+}
+const getDb = () => {
+  const dbFile = path.resolve(__dirname, './mocks/db.json')
+  const adapter = new FileSync(dbFile)
+  const db = low(adapter)
+  db._.mixin(lodashId)
+  return db
+}
 module.exports = {
   css: {
     loaderOptions: {
@@ -16,28 +38,25 @@ module.exports = {
   },
   devServer: {
     before(app) {
+      const db = getDb()
+      app.use(bodyParser.json())
+      app.use(bodyParser.urlencoded({ extended: true }))
       app.use(async (req, res, next) => {
         if (/^\/mocks\//i.test(req.path)) {
           try {
-            const mod = req.path.split('/')[2]
-            const jsType = /\.js$/.test(req.path) ? '' : '.js'
-            const file = path.resolve(__dirname, `.${req.path}${jsType}`)
+            const file = require.resolve(
+              path.resolve(__dirname, `.${req.path}`)
+            )
             delete require.cache[file]
             const func = require(file)
-            const getDb = mod => {
-              const adapter = new FileSync(
-                path.resolve(__dirname, './db', `${mod}.json`)
-              )
-              const db = low(adapter)
-              return db
-            }
-            const db = getDb(mod)
+            const schema = getSchema()
+            db.defaults(schema).write()
             const sleep = (timeout = 0) => {
               return new Promise(resolve => {
                 setTimeout(resolve, timeout)
               })
             }
-            await func({ req, res, db, sleep, next, getDb })
+            await func({ req, res, db, sleep, next })
           } catch (err) {
             next(err)
           }
@@ -47,7 +66,7 @@ module.exports = {
       })
     },
     host: '0.0.0.0',
-    // port: 93,
+    port: 93,
     disableHostCheck: true
     // proxy: {
     // 设置代理

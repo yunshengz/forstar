@@ -1,10 +1,13 @@
-module.exports = async function({ req, res, sleep }) {
-  const { timeout } = req.query
-  if (timeout) {
-    await sleep(timeout)
-  }
+module.exports = async function({ req, res, db }) {
+  const { username, password } = req.body
+  const id = db
+    .get('account')
+    .insert({ username, password })
+    .write().id
   res.json({
-    a: 1,
-    b: 2
+    error: 0,
+    payload: {
+      id
+    }
   })
 }

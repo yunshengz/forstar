@@ -16,10 +16,6 @@ class Ajax extends AjaxBase {
       await this.emit('prefetch')
     })
   }
-  // body(data) {
-  //   this.config({ data })
-  //   return this
-  // }
   onSuccess(callback) {
     this.on('success', callback)
     return this
