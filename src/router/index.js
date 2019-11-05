@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import account from './account'
-import message from './message'
+import site from './site'
 Vue.use(VueRouter)
 
-const routes = [...account, ...message]
+const routes = [...account, ...site]
 
 const router = new VueRouter({
   mode: 'history',

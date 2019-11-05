@@ -2,13 +2,19 @@ import AjaxBase from '@stand/ajax-base'
 class Ajax extends AjaxBase {
   constructor(...params) {
     super(...params)
+
     this.on('netSuccess', async function(raw) {
       if (!raw.data.error) {
-        await this.emit('abnormal', raw)
-      } else {
+        console.log('ok!!!!!')
         await this.emit('success', raw.data, raw)
+      } else {
+        await this.emit('abnormal', raw)
+        if (raw.data.error === 405) {
+          // 跳转
+        }
       }
     })
+    //
     this.on('netFail', async function(error) {
       await this.emit('abnormal', error)
     })
@@ -43,6 +49,9 @@ Ajax.create = (url, method) => {
     ajax.url(url)
   }
   method && ajax.method(method)
+  ajax.on('request', function() {
+    console.log('======')
+  })
   console.log('method: ', method)
   return ajax
 }

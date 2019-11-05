@@ -1,4 +1,4 @@
-import socket from '@/lib/socket'
+import { site } from '@/services'
 const store = {
   namespaced: true,
   state: {
@@ -14,9 +14,9 @@ const store = {
     }
   },
   actions: {
-    async subscribe() {
-      await socket.auth()
-      // socket.send({ payload: 'xxxx' })
+    async create(ctx, params) {
+      const chain = site.create()
+      await chain.params(params).fetch()
     }
   }
 }
