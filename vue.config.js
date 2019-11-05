@@ -66,7 +66,7 @@ module.exports = {
       })
     },
     host: '0.0.0.0',
-    port: 93,
+    // port: 93,
     disableHostCheck: true
     // proxy: {
     // 设置代理

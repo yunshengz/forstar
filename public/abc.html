@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+
+
+  const token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBcHBcXFV0aWxcXEF1dGhcXFVzZXJBY2NvdW50Iiwic3ViIjoiMTAwMDA1IiwiaWF0IjoxNTcxMDQwNTgwLCJleHAiOjE1NzM2MzI1ODAsImRhdGEiOnsidXNlcmlkIjoxMDAwMDV9fQ.CeJjrsOo6Ky8u6rko0jT6YogEVQChWxNNeR6CWFsHFI'
+  
+  const ws = new WebSocket('ws://192.168.8.118:18308/notice')
+  console.log('state: ', ws.readyState)
+  // setTimeout(function () {
+  //   console.log('...')
+  //   ws.onopen = function open() {
+  //     console.log('state: ', 1234)
+      
+  //   }
+  // }, 2000)
+  ws.send(
+        JSON.stringify({
+          token
+          // time: Date.now()
+        })
+      )
+
+  ws.onclose = function close() {
+    console.log('disconnected')
+  }
+
+  ws.onmessage = function incoming(data) {
+    console.log(data)
+
+    // setTimeout(function timeout() {
+    //   ws.send(
+    //     JSON.stringify({
+    //       time: Date.now()
+    //     })
+    //   )
+    // }, 5000)
+  }
+</script>
+</body>
+</html>
