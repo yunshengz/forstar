@@ -3,7 +3,7 @@
     <a-col :span="2"></a-col>
     <a-col :span="20">
       <a-divider>注册页</a-divider>
-      <a-spin :spinning="submitting">
+      <a-spin :spinning="loading">
         <a-form
           id="components-form-demo-normal-login"
           :form="form"
@@ -44,7 +44,7 @@
               注册
             </a-button>
             <a-divider />
-            已有账号
+            已有账号 {{ loading ? 'loading' : 'loaded!' }}
             <a-button>
               请登陆
             </a-button>
@@ -57,22 +57,28 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+// import { mapState, mapActions } from 'vuex'
+import { account } from '@/services'
 export default {
   beforeCreate() {
+    this.chain = account.reg()
     this.form = this.$form.createForm(this, { name: 'normal_login' })
   },
   computed: {
-    ...mapState('account-reg', ['submitting'])
+    loading() {
+      return this.chain.state.loading
+    }
+    // ...mapState('account-reg', ['submitting'])
   },
   methods: {
-    ...mapActions('account-reg', ['submit']),
+    // ...mapActions('account-reg', ['submit']),
     handleSubmit(e) {
       e.preventDefault()
       this.form.validateFields(async (err, values) => {
         if (!err) {
           console.log('Received values of form: ', values)
-          await this.submit(values)
+          // await this.submit(values)
+          await this.chain.fetch()
         }
       })
     }

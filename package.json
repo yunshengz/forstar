@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@hapi/nes": "^11.2.2",
-    "@stand/ajax-base": "^0.1.3",
+    "@stand/ajax-base": "^0.2.0",
     "@stand/base": "^0.2.2",
     "ant-design-vue": "^1.4.3",
     "core-js": "^3.1.2",

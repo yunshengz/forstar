@@ -1,47 +1,34 @@
 import AjaxBase from '@stand/ajax-base'
+import store from '@/store'
 class Ajax extends AjaxBase {
   constructor(...params) {
     super(...params)
 
-    this.on('netSuccess', async function(raw) {
-      if (!raw.data.error) {
-        console.log('ok!!!!!')
-        await this.emit('success', raw.data, raw)
-      } else {
-        await this.emit('abnormal', raw)
-        if (raw.data.error === 405) {
-          // 跳转
+    store.registerModule('ajax', {
+      state: {
+        loading: false
+      },
+      mutations: {
+        setLoading(state, type) {
+          state.loading = type
         }
       }
     })
-    //
-    this.on('netFail', async function(error) {
-      await this.emit('abnormal', error)
+    this.on('request', async function() {
+      console.log('req1: ', store.state.ajax.loading)
+      store.commit('setLoading', true)
+      console.log('req2: ', store.state.ajax.loading)
     })
-    this.before('fetch', async function() {
-      await this.emit('prefetch')
+    this.on('netCompleted', async function() {
+      console.log('req3: ', store.state.ajax.loading)
+      store.commit('setLoading', false)
+      console.log('req4: ', store.state.ajax.loading)
     })
-  }
-  onSuccess(callback) {
-    this.on('success', callback)
-    return this
-  }
-  onAbnormal(callback) {
-    this.on('abnormal', callback)
-    return this
-  }
-  process(successHandle, abnormalHandle) {
-    this.on('success', successHandle)
-    this.on('netCompleted', abnormalHandle)
-    return this
-  }
-  onPrefetch(callback) {
-    this.on('prefetch', callback)
-    return this
   }
 }
 Ajax.create = (url, method) => {
-  const ajax = new Ajax({
+  const ajax = new Ajax()
+  ajax.config({
     responseType: 'json',
     baseURL: '/mocks/'
   })
@@ -49,10 +36,8 @@ Ajax.create = (url, method) => {
     ajax.url(url)
   }
   method && ajax.method(method)
-  ajax.on('request', function() {
-    console.log('======')
-  })
-  console.log('method: ', method)
+  ajax.state = store.state.ajax
+  // ajax.set('state', store.state.ajax)
   return ajax
 }
 export default Ajax

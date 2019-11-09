@@ -14,23 +14,24 @@ const store = {
     }
   },
   actions: {
-    async submit({ commit }, params) {
+    async submit() {
       const chain = account.reg()
       await chain
-        .onPrefetch(() => {
-          commit('setSubmitting', true)
-        })
-        .params(params)
-        .process(
-          () => {
-            console.log('ok!')
-          },
-          () => {
-            commit('setSubmitting', false)
-            console.log('completed!')
-          }
-        )
+        // .onPrefetch(() => {
+        //   commit('setSubmitting', true)
+        // })
+        // .params(params)
+        // .process(
+        //   () => {
+        //     console.log('ok!')
+        //   },
+        //   () => {
+        //     commit('setSubmitting', false)
+        //     console.log('completed!')
+        //   }
+        // )
         .fetch()
+      return chain
     }
   }
 }
