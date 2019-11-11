@@ -1,4 +1,5 @@
 module.exports = {
   account: [],
-  posts: []
+  posts: [],
+  article: []
 }

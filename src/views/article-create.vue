@@ -2,8 +2,8 @@
   <a-row>
     <a-col :span="2"></a-col>
     <a-col :span="20">
-      <a-divider>注册页</a-divider>
-      <a-spin :spinning="loading">
+      <a-divider>写文章</a-divider>
+      <a-spin :spinning="false">
         <a-form
           id="components-form-demo-normal-login"
           :form="form"
@@ -13,13 +13,13 @@
           <a-form-item>
             <a-input
               v-decorator="[
-                'username',
+                'title',
                 {
-                  rules: [{ required: true, message: '请输入用户名!' }],
-                  initialValue: 'zhangsan'
+                  rules: [{ required: true, message: '请输入标题!' }],
+                  initialValue: 'title'
                 }
               ]"
-              placeholder="用户名"
+              placeholder="这是标题"
             >
               <a-icon slot="prefix" type="user" />
             </a-input>
@@ -27,26 +27,20 @@
           <a-form-item>
             <a-input
               v-decorator="[
-                'password',
+                'content',
                 {
-                  rules: [{ required: true, message: '请输入密码!' }],
-                  initialValue: '123456'
+                  rules: [{ required: true, message: '请输入内容!' }],
+                  initialValue: '这是内容'
                 }
               ]"
-              type="password"
-              placeholder="密码"
+              placeholder="内容"
             >
               <a-icon slot="prefix" type="lock" />
             </a-input>
           </a-form-item>
           <a-form-item>
             <a-button type="primary" html-type="submit">
-              注册
-            </a-button>
-            <a-divider />
-            已有账号
-            <a-button>
-              请登陆
+              提交
             </a-button>
           </a-form-item>
         </a-form>
@@ -57,23 +51,24 @@
 </template>
 
 <script>
-import { account } from '@/services'
+import { createArticle } from '@/services'
 export default {
-  data() {
+  beforeCreate() {
     this.form = this.$form.createForm(this, { name: 'normal_login' })
-    this.service = account.reg()
-    return {}
-  },
-  computed: {
-    serviceDatas: vm => vm.service.state,
-    loading: vm => vm.serviceDatas.loading
   },
   methods: {
     handleSubmit(e) {
       e.preventDefault()
       this.form.validateFields(async (err, values) => {
         if (!err) {
-          await this.service.params(values).fetch()
+          // console.log('Received values of form: ', values)
+          const { title, content } = values
+          await createArticle()
+            .params({
+              title,
+              content
+            })
+            .fetch()
         }
       })
     }

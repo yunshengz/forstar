@@ -5,7 +5,7 @@ module.exports = async function({ req, res, db, sleep }) {
     .insert({ username, password })
     .write().id
 
-  await sleep(3000)
+  await sleep(5000)
   res.json({
     error: 0,
     payload: {

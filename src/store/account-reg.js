@@ -1,9 +1,11 @@
 import { account } from '@/services'
 const store = {
   namespaced: true,
-  state: {
-    sending: false,
-    submitting: false
+  state() {
+    return {
+      sending: false,
+      submitting: false
+    }
   },
   mutations: {
     setSending(state, type) {
