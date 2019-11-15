@@ -3,6 +3,7 @@
     <a-col :span="2"></a-col>
     <a-col :span="20">
       <a-divider>注册页</a-divider>
+      {{ loading }} - {{ datas }}
       <a-spin :spinning="loading">
         <a-form
           id="components-form-demo-normal-login"
@@ -45,9 +46,11 @@
             </a-button>
             <a-divider />
             已有账号
-            <a-button>
-              请登陆
-            </a-button>
+            <router-link to="/account/login">
+              <a-button>
+                请登陆
+              </a-button>
+            </router-link>
           </a-form-item>
         </a-form>
       </a-spin>
@@ -59,14 +62,32 @@
 <script>
 import { account } from '@/services'
 export default {
+  // created() {
+  //   console.log('created!')
+  //   this.$service()
+  // },
+  props: {
+    a: {
+      type: Number,
+      default: 3
+    }
+  },
+  destroyed() {
+    console.log('destroyed!', this.m)
+  },
   data() {
+    console.log('props: ', this.a)
     this.form = this.$form.createForm(this, { name: 'normal_login' })
-    this.service = account.reg()
+    this.service = this.$service(account.reg())
     return {}
   },
+  mounted() {
+    console.log('this.a: ', this.a)
+  },
   computed: {
-    serviceDatas: vm => vm.service.state,
-    loading: vm => vm.serviceDatas.loading
+    serviceDatas: vm => vm.service.store,
+    loading: vm => vm.serviceDatas.loading,
+    datas: vm => vm.serviceDatas.datas
   },
   methods: {
     handleSubmit(e) {

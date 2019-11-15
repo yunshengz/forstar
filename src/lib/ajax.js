@@ -1,33 +1,19 @@
 import AjaxBase from '@stand/ajax-base'
-import store from '@/store'
+// import store from '@/store'
 
 class Ajax extends AjaxBase {
   constructor(...params) {
     super(...params)
-    store.registerModule('services', {
-      namespaced: true,
-      state: {
-        loading: false,
-        datas: {},
-        status: true
-      },
-      mutations: {
-        setLoading(state, type) {
-          state.loading = type
-        }
-      }
-    })
     this.config({
-      responseType: 'json',
-      baseURL: '/mocks/'
+      baseURL: 'http://ipliu.com:8000',
+      responseType: 'json'
     })
-    this.on('request', async function() {
-      store.commit('services/setLoading', true)
-    })
-    this.on('netCompleted', async function() {
-      store.commit('services/setLoading', false)
-    })
-    this.state = store.state.services
+  }
+  process(successHandle, completedHandle) {
+    return this.on('netSuccess', successHandle).on(
+      'netCompleted',
+      completedHandle
+    )
   }
 }
 

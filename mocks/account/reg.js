@@ -1,15 +1,14 @@
-module.exports = async function({ req, res, db, sleep }) {
+module.exports = async function({ req, res, db }) {
   const { username, password } = req.body
-  const id = db
+  const user = db
     .get('account')
     .insert({ username, password })
-    .write().id
+    .write()
 
-  await sleep(5000)
   res.json({
     error: 0,
     payload: {
-      id
+      auth: user.id
     }
   })
 }

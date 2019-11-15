@@ -1,11 +1,9 @@
-import Ajax from '@/lib/ajax'
+// import Ajax from '@/lib/ajax'
+import Ajax from '@stand/ajax-base'
 // import { createArticle } from './article'
 export const account = {
   reg: () => {
-    console.log('xxx')
-    return Ajax.create('/account/reg', 'POST').on('netSuccess', function() {
-      console.log('res!')
-    })
+    return Ajax.create('/account/reg', 'POST')
     // .on('request', async function() {
     //   const that = this
     //   await Ajax.create('/message/read', 'POST')

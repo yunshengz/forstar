@@ -27,6 +27,12 @@ export default [
   {
     path: '/account/reg',
     name: 'AccountReg',
-    component: () => import('@/views/account-reg')
+    component: () => import('@/views/account-reg'),
+    props: () => {
+      return {
+        a: 1,
+        b: 2
+      }
+    }
   }
 ]

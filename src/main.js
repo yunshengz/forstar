@@ -5,7 +5,6 @@ import App from './views/global-app'
 import router from './router'
 import store from './store'
 
-console.log('store: ', store)
 Vue.config.productionTip = false
 
 new Vue({
