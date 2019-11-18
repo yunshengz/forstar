@@ -24,6 +24,11 @@
         >
           登陆
         </a-button>
+        <a-button>
+          <router-link :to="{ name: 'AccountRegister' }">
+            注册
+          </router-link>
+        </a-button>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -47,6 +52,11 @@ export default {
       get() {
         return this.$store.state.accountDialogDisplay
       }
+    }
+  },
+  watch: {
+    $route() {
+      this.isShow = false
     }
   },
   beforeCreate() {
