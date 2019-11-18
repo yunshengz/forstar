@@ -6,14 +6,17 @@ module.exports = async function({ req, res, db }) {
     })
     return
   }
-  const { title, tags, desc } = req.body
-  const album = db
-    .get('album')
-    .insert({ title, tags, desc })
+  const { id, title, tags, desc } = req.body
+  db.get('album')
+    .find({ id })
+    .assign({
+      title,
+      tags,
+      desc
+    })
     .write()
 
   res.json({
-    error: 0,
-    payload: album.id
+    error: 0
   })
 }

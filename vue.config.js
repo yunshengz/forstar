@@ -1,8 +1,11 @@
 const path = require('path')
+const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin')
+
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 const bodyParser = require('body-parser')
 const lodashId = require('lodash-id')
+const cookieParser = require('cookie-parser')
 
 const getSchema = () => {
   try {
@@ -24,6 +27,9 @@ const getDb = () => {
   return db
 }
 module.exports = {
+  pages: {
+    index: 'src/global/app.js'
+  },
   css: {
     loaderOptions: {
       less: {
@@ -36,9 +42,21 @@ module.exports = {
       }
     }
   },
+  configureWebpack: () => {
+    return {
+      resolve: {
+        plugins: [
+          new DirectoryNamedWebpackPlugin({
+            exclude: /node_modules/
+          })
+        ]
+      }
+    }
+  },
   devServer: {
     before(app) {
       const db = getDb()
+      app.use(cookieParser())
       app.use(bodyParser.json())
       app.use(bodyParser.urlencoded({ extended: true }))
       app.use(async (req, res, next) => {

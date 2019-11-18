@@ -2,7 +2,7 @@ import AjaxBase from '@stand/ajax-base'
 import { notification } from 'ant-design-vue'
 import store from '../store'
 import { apiDomain } from '../config'
-import { queue } from './account-callbacks'
+import { queue } from './auth-callbacks'
 class Ajax extends AjaxBase {
   constructor(...params) {
     super(...params)
@@ -22,12 +22,6 @@ class Ajax extends AjaxBase {
         }
         await this.emit('success', payload, res, raw)
       } else {
-        if (message && config.notice !== false) {
-          notification.error({
-            message: '出错了',
-            description: message
-          })
-        }
         const codeHandle = config[`error${error}`]
         if (codeHandle && typeof codeHandle === 'function') {
           await codeHandle.call(this, res)
@@ -37,6 +31,12 @@ class Ajax extends AjaxBase {
           } else if (error === 602) {
             await this.error602(res)
           } else {
+            if (message && config.notice !== false) {
+              notification.error({
+                message: '出错了',
+                description: message
+              })
+            }
             await this.emit('errorcode', res, raw)
           }
         }

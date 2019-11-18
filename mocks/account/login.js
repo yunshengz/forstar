@@ -5,12 +5,15 @@ module.exports = async function({ req, res, db }) {
     .find({ username, password })
     .value()
 
-  if (user) {
+  if (!user) {
     res.json({
-      error: 100,
-      message: '用户不存在'
+      error: 600,
+      message: '账号有误'
     })
   } else {
+    res.cookie('auth', user.id, {
+      expires: new Date(Date.now() + 365 * 24 * 3600000)
+    })
     res.json({
       error: 0,
       payload: {
