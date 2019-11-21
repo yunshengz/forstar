@@ -1,4 +1,6 @@
+// 兼容IE9、IE10静态属性继承问题
 import 'proto-polyfill'
+
 import Vue from 'vue'
 import './lib/antd'
 import App from './views/app'

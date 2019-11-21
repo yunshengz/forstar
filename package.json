@@ -9,8 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@hapi/nes": "^11.2.2",
-    "@stand/ajax-base": "^0.2.3",
+    "@stand/ajax-base": "^0.2.4",
     "ant-design-vue": "^1.4.3",
     "core-js": "^3.1.2",
     "proto-polyfill": "^1.7.0",

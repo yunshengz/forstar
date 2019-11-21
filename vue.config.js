@@ -27,23 +27,18 @@ const getDb = () => {
   return db
 }
 module.exports = {
-  pages: {
-    index: 'src/global/app.js'
-  },
   css: {
     loaderOptions: {
       less: {
-        // modifyVars: {
-        //   'primary-color': '#1DA57A',
-        //   'link-color': '#1DA57A',
-        //   'border-radius-base': '2px'
-        // },
         javascriptEnabled: true
       }
     }
   },
   configureWebpack: () => {
     return {
+      entry: {
+        app: path.resolve('./src/global/app.js')
+      },
       resolve: {
         plugins: [
           new DirectoryNamedWebpackPlugin({
@@ -86,15 +81,5 @@ module.exports = {
     host: '0.0.0.0',
     // port: 93,
     disableHostCheck: true
-    // proxy: {
-    // 设置代理
-    // '/mock': {
-    //   target: 'http://api.dev.westartrack.com:90/',
-    //   changeOrigin: true,
-    //   pathRewrite: {
-    //     '^/mock': '/'
-    //   }
-    // }
-    // }
   }
 }
