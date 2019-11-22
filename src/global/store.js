@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { storeModules as modules } from './imports'
+import { subStores as modules } from './imports'
 Vue.use(Vuex)
 
 export default new Vuex.Store({

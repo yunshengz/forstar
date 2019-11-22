@@ -5,7 +5,7 @@ import { store as account, router as accountRouter } from '@/account'
 import { store as album, router as albumRouter } from '@/album'
 
 export const routes = [...homepageRouter, ...accountRouter, ...albumRouter]
-export const storeModules = {
+export const subStores = {
   homepage,
   account,
   album
