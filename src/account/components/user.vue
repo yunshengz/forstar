@@ -18,7 +18,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userinfo'])
+    ...mapState('account', ['userinfo'])
   },
   async created() {
     await this.fetchDatas()
@@ -31,7 +31,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setUserinfo']),
+    ...mapMutations('account', ['setUserinfo']),
     async fetchDatas() {
       await getUserinfo()
         .cross(() => (this.loading = true), () => (this.loading = false))

@@ -1,8 +1,7 @@
 import AjaxBase from '@stand/ajax-base'
 import { notification } from 'ant-design-vue'
-import store from '../store'
 import { apiDomain } from '../config'
-import { queue } from './auth-callbacks'
+import { authError } from '../imports'
 class Ajax extends AjaxBase {
   constructor(...params) {
     super(...params)
@@ -54,16 +53,7 @@ class Ajax extends AjaxBase {
     return this.on('success', successHandle)
   }
   async error601() {
-    const that = this
-    await new Promise(resolve => {
-      // 设置登录或注册成功的回调函数
-      queue(async () => {
-        await that.fetch()
-        resolve()
-      })
-      // 显示弹窗
-      store.commit('updateAccountDialogDisplay', true)
-    })
+    await authError(this)
   }
   error602(res) {
     const { payload } = res

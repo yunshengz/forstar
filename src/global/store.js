@@ -1,21 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { subStores as modules } from './imports'
+import { modules } from './imports'
+import { setStore } from './lib/globals'
+
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules,
-  state: {
-    accountDialogDisplay: false,
-    userinfo: {}
-  },
-  mutations: {
-    setUserinfo(state, info) {
-      state.userinfo = info
-    },
-    updateAccountDialogDisplay(state, type) {
-      state.accountDialogDisplay = !!type
-    }
-  },
+  state: {},
+  mutations: {},
   actions: {}
 })
+
+setStore(store)
+
+export default store

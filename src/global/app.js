@@ -4,8 +4,8 @@ import 'proto-polyfill'
 import Vue from 'vue'
 import './lib/antd'
 import App from './views/app'
-import router from './router'
 import store from './store'
+import router from './router'
 
 Vue.config.productionTip = false
 

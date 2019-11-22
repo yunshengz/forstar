@@ -1,1 +1,1 @@
-export { dequeue, Ajax } from '@/global'
+export { Ajax, getStore } from '../global'

@@ -36,8 +36,9 @@
 
 <script>
 import { login } from '../api'
-import { dequeue } from '../imports'
+import { dequeue } from '../lib/auth-dialog'
 import rules from '../lib/rules'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'AccountAuthDialog',
   data() {
@@ -46,12 +47,13 @@ export default {
     }
   },
   computed: {
+    ...mapState('account', ['display']),
     isShow: {
       set(val) {
-        this.$store.commit('updateAccountDialogDisplay', val)
+        this.updateDisplay(val)
       },
       get() {
-        return this.$store.state.accountDialogDisplay
+        return this.display
       }
     }
   },
@@ -68,6 +70,10 @@ export default {
     }
   },
   methods: {
+    show() {
+      console.log('show')
+    },
+    ...mapMutations('account', ['updateDisplay']),
     loginHandle() {
       this.form.validateFieldsAndScroll(async (err, fields) => {
         if (!err) {

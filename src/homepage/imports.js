@@ -1,1 +1,1 @@
-export { UserComponent } from '@/account'
+export { UserComponent } from '../account'
