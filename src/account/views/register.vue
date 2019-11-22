@@ -21,7 +21,7 @@
 
 <script>
 import rules from '../lib/rules'
-import { register } from '../imports'
+import { register } from '../api'
 export default {
   data() {
     return {

@@ -1,9 +1,2 @@
-export {
-  createAlbum,
-  listAlbum,
-  deleteAlbum,
-  editAlbum,
-  getAlbumDetail
-} from '@/global/api'
-
+export { Ajax } from '@/global'
 export { UserComponent } from '@/account'

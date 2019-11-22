@@ -1,2 +1,1 @@
-export { dequeue } from '@/global'
-export { login, logout, register, getUserinfo } from '@/global/api'
+export { dequeue, Ajax } from '@/global'

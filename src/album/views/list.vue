@@ -39,7 +39,7 @@
   </div>
 </template>
 <script>
-import { listAlbum, deleteAlbum } from '../imports'
+import { listAlbum, deleteAlbum } from '../api'
 export default {
   data() {
     return {

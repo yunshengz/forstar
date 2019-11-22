@@ -35,7 +35,7 @@
 
 <script>
 import rules from '../lib/rules'
-import { editAlbum, getAlbumDetail } from '../imports'
+import { editAlbum, getAlbumDetail } from '../api'
 export default {
   props: {
     aid: {

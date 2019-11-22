@@ -33,7 +33,7 @@
 
 <script>
 import rules from '../lib/rules'
-import { createAlbum } from '../imports'
+import { createAlbum } from '../api'
 export default {
   data() {
     return {

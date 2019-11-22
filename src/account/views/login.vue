@@ -24,7 +24,7 @@
 
 <script>
 import rules from '../lib/rules'
-import { login } from '../imports'
+import { login } from '../api'
 export default {
   data() {
     return {

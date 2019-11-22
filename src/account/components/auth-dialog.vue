@@ -35,7 +35,8 @@
 </template>
 
 <script>
-import { login, dequeue } from '../imports'
+import { login } from '../api'
+import { dequeue } from '../imports'
 import rules from '../lib/rules'
 export default {
   name: 'AccountAuthDialog',

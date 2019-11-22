@@ -9,7 +9,7 @@
   </a-dropdown>
 </template>
 <script>
-import { getUserinfo, logout } from '../imports'
+import { getUserinfo, logout } from '../api'
 import { mapState, mapMutations } from 'vuex'
 export default {
   data() {
